@@ -19,13 +19,13 @@
 - name: postgresql - allow local non-user ipv4 connections
   lineinfile:
     path: "/var/lib/pgsql/data/pg_hba.conf"
-    search_string: 'host    all             all             127.0.0.1/32            ident'
+    regexp: 'host    all             all             127.0.0.1/32            ident'
     line: 'host    all             all             127.0.0.1/32            md5'
 
 - name: postgresql - allow local non-user ipv6 connections
   lineinfile:
     path: "/var/lib/pgsql/data/pg_hba.conf"
-    search_string: 'host    all             all             ::1/128                 ident'
+    regexp: 'host    all             all             ::1/128                 ident'
     line: 'host    all             all             127.0.0.1/32            md5'
 
 - name: postgresql - upload sql script
