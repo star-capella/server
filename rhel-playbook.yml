@@ -3,6 +3,8 @@
   hosts: all
   become: yes
   become_user: root
+  vars_files:
+    - sensitive_vars.yml
   collections:
     - ansible.posix
     - community.crypto
@@ -32,6 +34,8 @@
   tasks:
     - include_tasks: tasks/nginx.yml
     - include_tasks: tasks/postgresql.yml
+    - include_tasks: tasks/cockpit.yml
+    - include_tasks: tasks/jenkins.yml
 
   post_tasks:
     - name: enable services

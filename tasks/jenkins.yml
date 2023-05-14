@@ -1,14 +1,13 @@
 ---
 - name: jenkins - setup repo
-  shell: wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo; rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+  shell: wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo; rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 
-- name: jenkins - install jenkins, java and maven
+- name: jenkins - install jenkins, java
   yum:
     name:
       - wget
       - java-17-openjdk-devel
       - java-17-openjdk-jmods
-#      - maven-openjdk17
       - git
       - jenkins
       
