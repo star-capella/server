@@ -1,0 +1,44 @@
+---
+- name: jenkins - setup repo
+  shell: wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo; rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+- name: jenkins - install jenkins, java and maven
+  yum:
+    name:
+      - wget
+      - java-17-openjdk-devel
+      - java-17-openjdk-jmods
+#      - maven-openjdk17
+      - git
+      - jenkins
+      
+- name: jenkins - ensure local changes directory exists
+  file:
+    path: /etc/systemd/system/jenkins.service.d
+    state: directory
+    mode: '0755'
+
+- name: jenkins - copy customizations
+  copy:
+    src: files/override.conf
+    dest: /etc/systemd/system/jenkins.service.d/override.conf
+
+- name: jenkins - enable and start
+  systemd:
+    name: jenkins
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
+
+- name: jenkins - add jenkins to /etc/subgid
+  lineinfile:
+    path: /etc/subgid
+    line: jenkins:100000:65536
+
+- name: jenkins - add jenkins to /etc/subuid
+  lineinfile:
+    path: /etc/subuid
+    line: jenkins:100000:65536
+
+- name: jenkins - allow jenkins to run podman
+  shell: loginctl enable-linger jenkins
