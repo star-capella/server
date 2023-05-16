@@ -5,7 +5,6 @@
 - name: jenkins - install jenkins, java
   yum:
     name:
-      - wget
       - java-17-openjdk-devel
       - java-17-openjdk-jmods
       - git
