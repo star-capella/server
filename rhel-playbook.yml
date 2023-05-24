@@ -23,7 +23,8 @@
       yum:
         name:
           - wget
-          - podman
+          - yum-utils
+          - python3-libsemanage
           - dnf-automatic
 
     - name: enable yum-cron updates
@@ -37,6 +38,7 @@
     - include_tasks: tasks/postgresql.yml
     - include_tasks: tasks/cockpit.yml
     - include_tasks: tasks/jenkins.yml
+    - include_tasks: tasks/docker.yml
 
   post_tasks:
     - name: enable services
@@ -46,4 +48,3 @@
         state: started
       with_items:
         - dnf-automatic.timer
-        - podman
